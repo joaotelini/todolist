@@ -3,10 +3,10 @@
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { useState } from "react";
-import { Task } from "@/types/TaskType";
+import { getTasksData } from "@/data/TaskData";
+import { v4 } from "uuid";
 
 export const TaskInput = () => {
-  const [tasks, setTasks] = useState<Task[]>([]);
   const [taskName, setTaskName] = useState("");
 
   const handleAddTask = (e: React.FormEvent) => {
@@ -16,11 +16,19 @@ export const TaskInput = () => {
       return alert("Preencha o campo");
     }
 
-    const newTask = { id: tasks.length + 1, taskName: taskName };
-    const updateTask = [...tasks, newTask];
-    setTasks(updateTask);
-    localStorage.setItem("tasks", JSON.stringify(updateTask));
+    const dataOldTasks = getTasksData();
+
+    const newTask = { id: v4(), taskName: taskName };
+    const updateTask = [...dataOldTasks, newTask];
+
+    try {
+      localStorage.setItem("tasks", JSON.stringify(updateTask));
+    } catch (e) {
+      console.error("Erro ao salvar no localStorage", e);
+    }
+
     setTaskName("");
+
     // Enviar evento de atualizacao de task
     window.dispatchEvent(new Event("tasksUpdated"));
   };
@@ -39,6 +47,7 @@ export const TaskInput = () => {
           className="font-normal ml-5 w-20 p-4"
           type="submit"
           variant="default"
+          disabled={!taskName.trim()}
         >
           Add
         </Button>

@@ -1,19 +1,38 @@
-"use client"
-import { Checkbox } from "./ui/checkbox";
-
+"use client";
+import { useEffect, useState } from "react";
+import { Task } from "@/types/TaskType";
+import { tasksData } from "@/data/TaskData";
 
 export const TaskList = () => {
+  const [tasks, setTasks] = useState<Task[]>([]);
+
+  useEffect(() => {
+    const updateTasks = () => {
+      setTasks(tasksData());
+    };
+
+    // Pega a atualizacao enviada
+    window.addEventListener("tasksUpdated", updateTasks);
+    updateTasks();
+
+    return () => {
+      window.removeEventListener("tasksUpdated", updateTasks);
+    };
+  }, []);
+
   return (
-    <div className="flex flex-col justify-center text-center mt-15">
-      <h3>Lista de Tarefas</h3>
-      <ul>
-        <li>Tarefa <Checkbox></Checkbox></li>
-        <li>Tarefa</li>
-        <li>Tarefa</li>
-        <li>Tarefa</li>
-        <li>Tarefa</li>
-        <li>Tarefa</li>
-      </ul>
+    <div className="mt-10">
+      {tasks.length === 0 ? (
+        <p className="">Nenhuma tarefa encontrada</p>
+      ) : (
+        <ul className="bg-gray-5 rounded p-4 shadow-md">
+          {tasks.map((task) => (
+            <li key={task.id} className="p-2 text-white">
+              {task.taskName}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

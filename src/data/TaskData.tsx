@@ -1,6 +1,6 @@
 import { Task } from "../types/TaskType";
 
-export function tasksData(): Task[] {
+export function getTasksData(): Task[] {
   const data = localStorage.getItem("tasks");
   if (!data) {
     return [];

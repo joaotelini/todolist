@@ -1,14 +1,14 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Task } from "@/types/TaskType";
-import { tasksData } from "@/data/TaskData";
+import { getTasksData } from "@/data/TaskData";
 
 export const TaskList = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
 
   useEffect(() => {
     const updateTasks = () => {
-      setTasks(tasksData());
+      setTasks(getTasksData());
     };
 
     // Pega a atualizacao enviada
@@ -23,9 +23,9 @@ export const TaskList = () => {
   return (
     <div className="mt-10">
       {tasks.length === 0 ? (
-        <p className="">Nenhuma tarefa encontrada</p>
+        <p className="text-center">Nenhuma tarefa encontrada.</p>
       ) : (
-        <ul className="bg-gray-5 rounded p-4 shadow-md">
+        <ul className="rounded p-4 shadow-lg">
           {tasks.map((task) => (
             <li key={task.id} className="p-2 text-white">
               {task.taskName}

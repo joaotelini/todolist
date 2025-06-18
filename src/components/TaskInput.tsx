@@ -18,7 +18,7 @@ export const TaskInput = () => {
 
     const dataOldTasks = getTasksData();
 
-    const newTask = { id: v4(), taskName: taskName };
+    const newTask = { id: v4(), taskName: taskName, completed: false };
     const updateTask = [...dataOldTasks, newTask];
 
     try {

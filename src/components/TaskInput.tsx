@@ -3,34 +3,33 @@
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { useState } from "react";
-import { getTasksData } from "@/data/TaskData";
-import { v4 } from "uuid";
+import { saveTasksData } from "@/services/TaskApi";
 
-export const TaskInput = () => {
+type TaskInputProps = {
+  onAddTask: () => void;
+};
+
+export const TaskInput = ({ onAddTask }: TaskInputProps) => {
   const [taskName, setTaskName] = useState("");
 
-  const handleAddTask = (e: React.FormEvent) => {
+  const handleAddTask = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!taskName.trim()) {
       return alert("Preencha o campo");
     }
 
-    const dataOldTasks = getTasksData();
-
-    const newTask = { id: v4(), taskName: taskName, completed: false };
-    const updateTask = [...dataOldTasks, newTask];
+    const newTask = { title: taskName, status: false };
 
     try {
-      localStorage.setItem("tasks", JSON.stringify(updateTask));
+      await saveTasksData(newTask);
+      onAddTask();
+      setTaskName("");
     } catch (e) {
-      console.error("Erro ao salvar no localStorage", e);
+      return console.error("Erro ao salvar a tarefa pelo front", e);
     }
 
     setTaskName("");
-
-    // Enviar evento de atualizacao de task
-    window.dispatchEvent(new Event("tasksUpdated"));
   };
 
   return (

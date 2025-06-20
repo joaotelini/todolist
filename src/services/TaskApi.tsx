@@ -21,7 +21,9 @@ export async function saveTasksData(tasks: Task): Promise<any> {
     const response = await axios.post("http://localhost:3334/tasks", tasks);
     return response.data as Task[];
   } catch (error) {
-    console.error("Erro ao salvar a tarefa", error);
+    console.error("Erro ao salvar a tarefa", {
+      message: (error as Error).message,
+    });
     return [];
   }
 }

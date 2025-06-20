@@ -41,7 +41,7 @@ export const TaskList = () => {
           ))}
         </ul>
       ) : tasks.length === 0 ? (
-        <p className="text-center">Nenhuma tarefa encontrada.</p>
+        <p className="text-center mt-5">Nenhuma tarefa encontrada.</p>
       ) : (
         <ul className="flex flex-col gap-2 rounded-lg p-4 shadow-lg transition-opacity duration-300">
           {tasks

@@ -43,7 +43,7 @@ export const TaskInput = ({ onAddTask }: TaskInputProps) => {
           placeholder="Digite a tarefa"
         />
         <Button
-          className="font-normal ml-5 w-20 p-4"
+          className="font-normal ml-5 w-20 p-4 cursor-pointer"
           type="submit"
           variant="default"
           disabled={!taskName.trim()}

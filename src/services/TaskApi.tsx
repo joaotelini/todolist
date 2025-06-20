@@ -4,9 +4,14 @@ import axios from "axios";
 export async function getTasksData(): Promise<Task[]> {
   try {
     const response = await axios.get("http://localhost:3334/tasks");
+    if (response.status !== 200) {
+      throw new Error("Erro ao buscar as tarefas");
+    }
     return response.data as Task[];
   } catch (error) {
-    console.error("Erro ao buscar as tarefas", error);
+    console.error("Erro ao buscar as tarefas", {
+      message: (error as Error).message,
+    });
     return [];
   }
 }

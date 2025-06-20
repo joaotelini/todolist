@@ -4,27 +4,39 @@ import axios from "axios";
 export async function getTasksData(): Promise<Task[]> {
   try {
     const response = await axios.get("http://localhost:3334/tasks");
-    if (response.status !== 200) {
-      throw new Error("Erro ao buscar as tarefas");
-    }
     return response.data as Task[];
   } catch (error) {
-    console.error("Erro ao buscar as tarefas", {
-      message: (error as Error).message,
-    });
+    if (axios.isAxiosError(error)) {
+      console.error("Erro ao buscar as tarefas", {
+        message: error.message,
+        status: error.response?.status,
+      });
+    } else {
+      console.error("Erro desconhecido ao buscar as tarefas", {
+        message: (error as Error).message,
+      });
+    }
+
     return [];
   }
 }
 
-export async function saveTasksData(tasks: Task): Promise<any> {
+export async function saveTasksData(tasks: Task): Promise<Task | null> {
   try {
     const response = await axios.post("http://localhost:3334/tasks", tasks);
-    return response.data as Task[];
+    return response.data as Task;
   } catch (error) {
-    console.error("Erro ao salvar a tarefa", {
-      message: (error as Error).message,
-    });
-    return [];
+    if (axios.isAxiosError(error)) {
+      console.error("Erro ao salvar as tarefas", {
+        message: error.message,
+        status: error.response?.status,
+      });
+    } else {
+      console.error("Erro desconhecido ao salvar as tarefas", {
+        message: (error as Error).message,
+      });
+    }
+    return null;
   }
 }
 

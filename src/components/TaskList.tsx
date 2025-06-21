@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { BadgeCheck, Trash2 } from "lucide-react";
-import { getTasksData } from "@/services/TaskApi";
+import { getTasksData, setTaskCompleted } from "@/services/TaskApi";
 import { Task } from "@/types/TaskType";
 import { TaskInput } from "./TaskInput";
 
@@ -16,6 +16,11 @@ export const TaskList = () => {
     const updatedTasks = await getTasksData();
     setTasks(updatedTasks);
     setIsLoading(false);
+  };
+
+  const handleSetCompleted = async (task: Task) => {
+    await setTaskCompleted(task.id, !task.status);
+    fetchTasks();
   };
 
   useEffect(() => {
@@ -59,6 +64,7 @@ export const TaskList = () => {
 
                 <div className="flex items-center gap-3">
                   <BadgeCheck
+                    onClick={() => handleSetCompleted(task)}
                     className="w-5 h-5 cursor-pointer"
                     color="#3de1de"
                     strokeWidth={0.75}

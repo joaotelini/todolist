@@ -70,3 +70,23 @@ export async function setTaskCompleted(
     return false;
   }
 }
+
+export async function deleteTask(taskId: number): Promise<boolean> {
+  try {
+    const apiUrl = `http://localhost:3334/tasks/${taskId}`;
+    await axios.delete(apiUrl);
+    return true;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error("Erro ao deletar a tarefa", {
+        message: error.message,
+        status: error.response?.status,
+      });
+    } else {
+      console.error("Erro desconhecido ao deletar a tarefa", {
+        message: (error as Error).message,
+      });
+    }
+    return false;
+  }
+}

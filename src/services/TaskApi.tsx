@@ -1,9 +1,10 @@
-import { Task } from "../types/TaskType";
+import { NewTask, Task } from "../types/TaskType";
 import axios from "axios";
 
 export async function getTasksData(): Promise<Task[]> {
   try {
-    const response = await axios.get("http://localhost:3334/tasks");
+    const apiUrl = "http://localhost:3334/tasks";
+    const response = await axios.get(apiUrl);
     return response.data as Task[];
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -21,11 +22,12 @@ export async function getTasksData(): Promise<Task[]> {
   }
 }
 
-export async function saveTasksData(tasks: Task): Promise<Task | null> {
+export async function saveTasksData(tasks: NewTask): Promise<Task | null> {
   try {
+    const apiUrl = "http://localhost:3334/tasks";
     // Enviando a url e o corpo da requisicao (tasks)
-    const response = await axios.post("http://localhost:3334/tasks", tasks);
-    return response.data as Task;
+    const response = await axios.post(apiUrl, tasks);
+    return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.error("Erro ao salvar as tarefas", {
@@ -46,7 +48,8 @@ export async function setTaskCompleted(
   newStatus: boolean
 ): Promise<boolean> {
   try {
-    const response = await axios.patch(`http://localhost:3334/tasks/${taskId}`, {
+    const apiUrl = `http://localhost:3334/tasks/${taskId}`;
+    const response = await axios.patch(apiUrl, {
       status: newStatus,
     });
 

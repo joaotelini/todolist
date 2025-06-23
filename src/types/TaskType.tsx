@@ -1,7 +1,7 @@
 export type Task = {
-  id: number;
+  _id: string;
   title: string;
   status: Boolean;
 };
 
-export type NewTask = Omit<Task, "id">;
+export type NewTask = Omit<Task, "_id" | "status">;

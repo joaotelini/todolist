@@ -22,7 +22,7 @@ export const TaskInput = ({ onAddTask }: TaskInputProps) => {
       return alert("Preencha o campo");
     }
 
-    const newTask:NewTask = { title: taskName, status: false };
+    const newTask: NewTask = { title: taskName };
 
     try {
       await saveTasksData(newTask);

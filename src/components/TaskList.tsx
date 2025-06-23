@@ -20,13 +20,13 @@ export const TaskList = () => {
   };
 
   const handleSetCompleted = async (task: Task) => {
-    await setTaskCompleted(task.id, !task.status);
+    await setTaskCompleted(task._id, !task.status);
     fetchTasks();
   };
 
   const handleDeleteTask = async (task: Task) => {
-    await deleteTask(task.id);
-    console.log("task deletada com o id", task.id);
+    await deleteTask(task._id);
+    console.log("task deletada com o id", task._id);
     fetchTasks();
   };
 
@@ -60,7 +60,7 @@ export const TaskList = () => {
             .sort((a, b) => Number(a.status) - Number(b.status))
             .map((task) => (
               <li
-                key={task.id}
+                key={task._id}
                 className={`flex items-center justify-between gap-5 px-4 py-2 rounded-lg ${
                   task.status ? "bg-zinc-500" : "bg-zinc-800"
                 }`}

@@ -3,7 +3,7 @@ import axios from "axios";
 
 export async function getTasksData(): Promise<Task[]> {
   try {
-    const apiUrl = "http://localhost:3334/tasks";
+    const apiUrl = "https://tasks-backend-b1yi.onrender.com/tasks";
     const response = await axios.get(apiUrl);
     return response.data as Task[];
   } catch (error) {
@@ -24,7 +24,7 @@ export async function getTasksData(): Promise<Task[]> {
 
 export async function saveTasksData(tasks: NewTask): Promise<Task | null> {
   try {
-    const apiUrl = "http://localhost:3334/tasks";
+    const apiUrl = "https://tasks-backend-b1yi.onrender.com/tasks";
     // Enviando a url e o corpo da requisicao (tasks)
     const response = await axios.post(apiUrl, tasks);
     return response.data;
@@ -44,11 +44,11 @@ export async function saveTasksData(tasks: NewTask): Promise<Task | null> {
 }
 
 export async function setTaskCompleted(
-  taskId: number,
+  taskId: string,
   newStatus: boolean
 ): Promise<boolean> {
   try {
-    const apiUrl = `http://localhost:3334/tasks/${taskId}`;
+    const apiUrl = `https://tasks-backend-b1yi.onrender.com/tasks/${taskId}`;
     const response = await axios.patch(apiUrl, {
       status: newStatus,
     });
@@ -71,9 +71,9 @@ export async function setTaskCompleted(
   }
 }
 
-export async function deleteTask(taskId: number): Promise<boolean> {
+export async function deleteTask(taskId: string): Promise<boolean> {
   try {
-    const apiUrl = `http://localhost:3334/tasks/${taskId}`;
+    const apiUrl = `https://tasks-backend-b1yi.onrender.com/tasks/${taskId}`;
     await axios.delete(apiUrl);
     return true;
   } catch (error) {

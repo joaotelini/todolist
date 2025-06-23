@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Rubik } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
+import { Analytics } from "@vercel/analytics/next";
 
 const rubik = Rubik({
   variable: "--font-rubik",
@@ -22,7 +23,8 @@ export default function RootLayout({
     <html lang="pt-br">
       <body className={`${rubik.variable}  antialiased`}>
         {children}
-        <Toaster position="bottom-right" expand={false} />
+        <Toaster position="bottom-right" expand={false} />\
+        <Analytics />
       </body>
     </html>
   );

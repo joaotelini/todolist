@@ -29,27 +29,35 @@ export const loginApi = async (data: { email: string; password: string }) => {
         message: response.data?.message || "Erro no login",
       };
     }
-  } catch (error: Error | any) {
+  } catch (error: unknown) {
     console.log("❌ [LOGIN-API] Erro capturado:", error);
 
-    if (error.response) {
-      return {
-        success: false,
-        error: true,
-        message:
-          error.response.data?.message || `Erro ${error.response.status}`,
-      };
-    } else if (error.request) {
-      return {
-        success: false,
-        error: true,
-        message: "Erro de conexão com o servidor",
-      };
+    if (axios.isAxiosError(error)) {
+      if (error.response) {
+        return {
+          success: false,
+          error: true,
+          message:
+            error.response.data?.message || `Erro ${error.response.status}`,
+        };
+      } else if (error.request) {
+        return {
+          success: false,
+          error: true,
+          message: "Erro de conexão com o servidor",
+        };
+      } else {
+        return {
+          success: false,
+          error: true,
+          message: error.message || "Erro desconhecido",
+        };
+      }
     } else {
       return {
         success: false,
         error: true,
-        message: error.message || "Erro desconhecido",
+        message: (error as Error).message || "Erro desconhecido",
       };
     }
   }

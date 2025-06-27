@@ -29,7 +29,7 @@ export const loginApi = async (data: { email: string; password: string }) => {
         message: response.data?.message || "Erro no login",
       };
     }
-  } catch (error: any) {
+  } catch (error: Error | any) {
     console.log("❌ [LOGIN-API] Erro capturado:", error);
 
     if (error.response) {

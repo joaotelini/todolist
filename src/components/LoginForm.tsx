@@ -55,8 +55,8 @@ export function LoginForm() {
     } catch (error) {
       console.log("💥 Erro capturado no try/catch:", error);
       console.log("💥 Error type:", typeof error);
-      console.log("💥 Error message:", (error as any)?.message);
-      console.log("💥 Error stack:", (error as any)?.stack);
+      console.log("💥 Error message:", error);
+      console.log("💥 Error stack:", error);
 
       toast.error("Erro inesperado ao fazer login.");
     }

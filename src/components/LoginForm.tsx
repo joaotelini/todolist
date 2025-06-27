@@ -40,7 +40,19 @@ export function LoginForm() {
     } else {
       toast.success("Login realizado com sucesso!");
 
-      router.push("/tasklist");
+      const checkCookieAndRedirect = () => {
+        const hasCookie = document.cookie.includes("token=");
+
+        if (hasCookie) {
+          router.push("/tasklist");
+        } else {
+          // Se ainda não tem cookie, tenta novamente em 100ms
+          setTimeout(checkCookieAndRedirect, 100);
+        }
+      };
+
+      // Inicia a verificação
+      setTimeout(checkCookieAndRedirect, 100);
     }
 
     setEmail("");

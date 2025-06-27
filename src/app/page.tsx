@@ -1,12 +1,18 @@
-import { TaskList } from "@/components/TaskList";
+import Link from "next/link";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="flex text-white min-h-screen items-center flex-col justify-center bg-gradient-to-br from-stone-800 via-zinc-700 to-slate-900 ">
-      <h1 className="mb-10 text-5xl font-bold text-center">Lista de Tarefas</h1>
-      <div>
-        <TaskList />
-      </div>
-    </div>
+    <main className="p-8 text-zinc-100 max-w-md mx-auto bg-zinc-900">
+      <h1 className="text-3xl font-bold mb-4">Bem-vindo ao Todo List</h1>
+      <p className="mb-6">Gerencie suas tarefas de forma simples e rápida.</p>
+      <Link href="/login" className="text-violet-400 underline">
+        Faça login
+      </Link>
+      {" ou "}
+      <Link href="/register" className="text-violet-400 underline">
+        cadastre-se
+      </Link>
+      {" para começar."}
+    </main>
   );
 }

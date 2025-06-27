@@ -16,14 +16,13 @@ export default async function TaskListPrivate() {
 
   if (!token) {
     redirect("/login");
-    return null;
   }
 
   try {
     jwt.verify(token, SECRET_KEY);
   } catch (error) {
+    console.log(error);
     redirect("/login");
-    return null;
   }
 
   return (

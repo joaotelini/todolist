@@ -6,7 +6,7 @@ export const registerApi = async (
 ): Promise<{
   error: boolean;
   message?: string;
-  data?: any;
+  data?: string;
 }> => {
   try {
     const apiUrl = "http://localhost:3334/auth/register";

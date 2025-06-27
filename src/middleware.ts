@@ -1,6 +1,5 @@
 import { MiddlewareConfig, NextRequest, NextResponse } from "next/server";
 import { jwtDecode, JwtPayload } from "jwt-decode";
-import path from "path";
 
 const publicRoutes = [
   { path: "/login", whenAuth: "redirect" },
@@ -52,6 +51,7 @@ export function middleware(request: NextRequest) {
     } catch (error) {
       // token inválido → manda login
       const redirectUrl = request.nextUrl.clone();
+      console.log(error);
       redirectUrl.pathname = redirect_when_not_auth;
       return NextResponse.redirect(redirectUrl);
     }

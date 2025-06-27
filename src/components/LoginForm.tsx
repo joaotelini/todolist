@@ -11,7 +11,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Mail, Lock } from "lucide-react";
 import { toast } from "sonner";
-import { use, useState } from "react";
+import { useState } from "react";
 
 import { loginApi } from "@/services/LoginApi";
 import { LoginType } from "@/types/LoginType";

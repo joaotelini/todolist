@@ -1,13 +1,7 @@
 import type { Metadata } from "next";
-import { Rubik } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
 import { Analytics } from "@vercel/analytics/next";
-
-const rubik = Rubik({
-  variable: "--font-rubik",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "Todo List for U",

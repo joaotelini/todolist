@@ -1,22 +1,23 @@
 import axios from "axios";
 import { LoginType } from "@/types/LoginType";
 
-export const loginApi = async (
-  data: LoginType
-): Promise<{
+const api = axios.create({
+  baseURL: "https://tasks-backend-b1yi.onrender.com",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  withCredentials: true,
+});
+
+type LoginApiResponse = {
   error: boolean;
   message?: string;
   data?: string;
-}> => {
-  try {
-    const apiUrl = "http://localhost:3334/auth/login";
+};
 
-    const response = await axios.post(apiUrl, data, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      withCredentials: true,
-    });
+export const loginApi = async (data: LoginType): Promise<LoginApiResponse> => {
+  try {
+    const response = await api.post("/auth/login", data);
 
     console.log("Login response:", response.data);
 

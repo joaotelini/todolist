@@ -11,7 +11,7 @@ const api = axios.create({
 
 export async function getTasksData(): Promise<Task[]> {
   try {
-    const response = await axios.get("/tasks");
+    const response = await api.get("/tasks");
 
     return response.data as Task[];
   } catch (error) {
@@ -22,7 +22,7 @@ export async function getTasksData(): Promise<Task[]> {
 
 export async function saveTasksData(tasks: NewTask): Promise<Task | null> {
   try {
-    const response = await axios.post("/tasks", tasks);
+    const response = await api.post("/tasks", tasks);
 
     return response.data;
   } catch (error) {

@@ -1,22 +1,25 @@
 import axios from "axios";
 import { RegisterType } from "@/types/RegisterType";
 
-export const registerApi = async (
-  data: RegisterType
-): Promise<{
+const api = axios.create({
+  baseURL: "https://tasks-backend-b1yi.onrender.com",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  withCredentials: true,
+});
+
+type RegisterApiResponse = {
   error: boolean;
   message?: string;
   data?: string;
-}> => {
-  try {
-    const apiUrl = "http://localhost:3334/auth/register";
+};
 
-    const response = await axios.post(apiUrl, data, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      withCredentials: true,
-    });
+export const registerApi = async (
+  data: RegisterType
+): Promise<RegisterApiResponse> => {
+  try {
+    const response = await api.post("/auth/register", data);
 
     return {
       error: false,

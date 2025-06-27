@@ -1,42 +1,56 @@
 import axios from "axios";
-import { LoginType } from "@/types/LoginType";
 
 const api = axios.create({
   baseURL: "https://tasks-backend-b1yi.onrender.com",
-  headers: {
-    "Content-Type": "application/json",
-  },
+  headers: { "Content-Type": "application/json" },
   withCredentials: true,
 });
 
-type LoginApiResponse = {
-  error: boolean;
-  message?: string;
-  data?: string;
-};
-
-export const loginApi = async (data: LoginType): Promise<LoginApiResponse> => {
+export const loginApi = async (data: { email: string; password: string }) => {
   try {
     const response = await api.post("/auth/login", data);
 
-    console.log("Login response:", response.data);
+    // Verificar se a resposta do backend indica sucesso
+    const isSuccess = response.status >= 200 && response.status < 300;
 
-    return {
-      error: false,
-      data: response.data,
-    };
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      const apiMessage = error.response?.data?.message;
+    console.log("🎯 [LOGIN-API] Login bem-sucedido?", isSuccess);
+
+    if (isSuccess) {
       return {
+        success: true,
+        error: false,
+        data: response.data,
+        message: response.data?.message || "Login realizado com sucesso!",
+      };
+    } else {
+      return {
+        success: false,
         error: true,
-        message: apiMessage || error.message,
+        message: response.data?.message || "Erro no login",
       };
     }
+  } catch (error: any) {
+    console.log("❌ [LOGIN-API] Erro capturado:", error);
 
-    return {
-      error: true,
-      message: "Erro inesperado",
-    };
+    if (error.response) {
+      return {
+        success: false,
+        error: true,
+        message:
+          error.response.data?.message || `Erro ${error.response.status}`,
+      };
+    } else if (error.request) {
+      return {
+        success: false,
+        error: true,
+        message: "Erro de conexão com o servidor",
+      };
+    } else {
+      return {
+        success: false,
+        error: true,
+        message: error.message || "Erro desconhecido",
+      };
+    }
   }
 };

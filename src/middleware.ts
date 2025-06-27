@@ -29,7 +29,7 @@ export function middleware(request: NextRequest) {
   if (authToken && publicRoute && publicRoute.whenAuth === "redirect") {
     const redirectUrl = request.nextUrl.clone();
 
-    redirectUrl.pathname = "/";
+    redirectUrl.pathname = "/tasklist";
 
     return NextResponse.redirect(redirectUrl);
   }

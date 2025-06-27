@@ -37,11 +37,11 @@ export function LoginForm() {
     if (response.error) {
       toast.error(response.message || "Erro ao fazer login.");
       return;
+    } else {
+      toast.success("Login realizado com sucesso!");
+
+      router.push("/tasklist");
     }
-
-    toast.success("Login realizado com sucesso!");
-
-    router.push("/tasklist");
 
     setEmail("");
     setPassword("");

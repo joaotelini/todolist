@@ -11,12 +11,15 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { toast } from "sonner";
-import Link from "next/link";
 import { User, Mail, Lock } from "lucide-react";
+
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { RegisterType } from "@/types/RegisterType";
 import { registerApi } from "@/services/RegisterApi";
 
 export function RegisterForm() {
+  const router = useRouter();
   const [fullname, setFullname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -39,6 +42,8 @@ export function RegisterForm() {
     }
 
     toast.success("Conta criada com sucesso!");
+
+    router.push("/login");
 
     setFullname("");
     setEmail("");

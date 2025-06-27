@@ -32,27 +32,33 @@ export function LoginForm() {
     }
 
     const data: LoginType = { email, password };
-    const response = await loginApi(data);
 
-    if (response.error) {
-      toast.error(response.message || "Erro ao fazer login.");
-      return;
-    } else {
-      toast.success("Login realizado com sucesso!");
+    try {
+      const response = await loginApi(data);
 
-      const checkCookieAndRedirect = () => {
-        const hasCookie = document.cookie.includes("token=");
+      if (response.error) {
+        console.log("❌ Erro encontrado na resposta:", response.error);
+        console.log("❌ Mensagem de erro:", response.message);
+        toast.error(response.message || "Erro ao fazer login.");
+        return;
+      } else {
+        console.log("✅ Login bem-sucedido!");
 
-        if (hasCookie) {
+        console.log("🍪 Cookies atuais ANTES:", document.cookie);
+
+        toast.success("Login realizado com sucesso!");
+
+        setTimeout(() => {
           router.push("/tasklist");
-        } else {
-          // Se ainda não tem cookie, tenta novamente em 100ms
-          setTimeout(checkCookieAndRedirect, 100);
-        }
-      };
+        }, 200);
+      }
+    } catch (error) {
+      console.log("💥 Erro capturado no try/catch:", error);
+      console.log("💥 Error type:", typeof error);
+      console.log("💥 Error message:", (error as any)?.message);
+      console.log("💥 Error stack:", (error as any)?.stack);
 
-      // Inicia a verificação
-      setTimeout(checkCookieAndRedirect, 100);
+      toast.error("Erro inesperado ao fazer login.");
     }
 
     setEmail("");

@@ -1,21 +1,17 @@
 import { NewTask, Task } from "../types/TaskType";
 import axios from "axios";
 
+const api = axios.create({
+  baseURL: "https://tasks-backend-b1yi.onrender.com",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  withCredentials: true,
+});
+
 export async function getTasksData(): Promise<Task[]> {
   try {
-    const token = document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("token"))
-      ?.split("=")[1];
-
-    const apiUrl = "http://localhost:3334/tasks";
-
-    const response = await axios.get(apiUrl, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      withCredentials: true,
-    });
+    const response = await axios.get("/tasks");
 
     return response.data as Task[];
   } catch (error) {
@@ -26,19 +22,7 @@ export async function getTasksData(): Promise<Task[]> {
 
 export async function saveTasksData(tasks: NewTask): Promise<Task | null> {
   try {
-    const token = document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("token"))
-      ?.split("=")[1];
-
-    const apiUrl = "http://localhost:3334/tasks";
-
-    const response = await axios.post(apiUrl, tasks, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      withCredentials: true,
-    });
+    const response = await axios.post("/tasks", tasks);
 
     return response.data;
   } catch (error) {
@@ -52,24 +36,7 @@ export async function setTaskCompleted(
   newStatus: boolean
 ): Promise<boolean> {
   try {
-    const token = document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("token"))
-      ?.split("=")[1];
-
-    const apiUrl = `http://localhost:3334/tasks/${taskId}`;
-
-    await axios.patch(
-      apiUrl,
-      { status: newStatus },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-      }
-    );
-
+    await api.patch(`/tasks/${taskId}`, { status: newStatus });
     return true;
   } catch (error) {
     console.error("Erro ao atualizar status da tarefa", error);
@@ -79,19 +46,7 @@ export async function setTaskCompleted(
 
 export async function deleteTask(taskId: string): Promise<boolean> {
   try {
-    const token = document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("token"))
-      ?.split("=")[1];
-
-    const apiUrl = `http://localhost:3334/tasks/${taskId}`;
-
-    await axios.delete(apiUrl, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      withCredentials: true,
-    });
+    await api.delete(`/tasks/${taskId}`);
 
     return true;
   } catch (error) {

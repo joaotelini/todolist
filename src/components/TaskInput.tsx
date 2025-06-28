@@ -6,7 +6,7 @@ import { useState } from "react";
 import { saveTasksData } from "@/services/TaskApi";
 import { toast } from "sonner";
 import { BadgeCheck } from "lucide-react";
-import { NewTask } from "@/types/TaskType";
+import { NewTaskType } from "@/types/TaskType";
 
 type TaskInputProps = {
   onAddTask: () => void;
@@ -22,7 +22,7 @@ export const TaskInput = ({ onAddTask }: TaskInputProps) => {
       return alert("Preencha o campo");
     }
 
-    const newTask: NewTask = { title: taskName };
+    const newTask: NewTaskType = { title: taskName };
 
     try {
       await saveTasksData(newTask);

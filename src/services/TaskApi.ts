@@ -1,5 +1,9 @@
-import { NewTask, Task } from "../types/TaskType";
 import axios from "axios";
+import {
+  NewTaskType,
+  EditStatusTaskType,
+  TaskApiResponse,
+} from "../types/TaskType";
 
 const api = axios.create({
   baseURL: "https://tasks-backend-b1yi.onrender.com",
@@ -9,48 +13,102 @@ const api = axios.create({
   withCredentials: true,
 });
 
-export async function getTasksData(): Promise<Task[]> {
+export const getTasksData = async (): Promise<TaskApiResponse> => {
   try {
     const response = await api.get("/tasks");
 
-    return response.data as Task[];
+    return {
+      error: false,
+      data: response.data,
+    };
   } catch (error) {
-    console.error("Erro ao buscar as tarefas", error);
-    return [];
+    if (axios.isAxiosError(error)) {
+      const apiMessage = error.response?.data?.message;
+      return {
+        error: true,
+        message: apiMessage || error.message,
+      };
+    }
+    return {
+      error: true,
+      message: "Erro inesperado",
+    };
   }
-}
+};
 
-export async function saveTasksData(tasks: NewTask): Promise<Task | null> {
+export const saveTasksData = async (
+  data: NewTaskType
+): Promise<TaskApiResponse> => {
   try {
-    const response = await api.post("/tasks", tasks);
+    const response = await api.post("/tasks", data);
 
-    return response.data;
+    return {
+      error: false,
+      message: response.data?.message,
+      data: response.data,
+    };
   } catch (error) {
-    console.error("Erro ao salvar as tarefas", error);
-    return null;
-  }
-}
+    if (axios.isAxiosError(error)) {
+      const apiMessage = error.response?.data?.message;
+      return {
+        error: true,
+        message: apiMessage || error.message,
+      };
+    }
 
-export async function setTaskCompleted(
-  taskId: string,
-  newStatus: boolean
-): Promise<boolean> {
+    return {
+      error: true,
+      message: "Erro inesperado",
+    };
+  }
+};
+
+export const setTaskCompleted = async (
+  data: EditStatusTaskType
+): Promise<TaskApiResponse> => {
   try {
-    await api.patch(`/tasks/${taskId}`, { status: newStatus });
-    return true;
+    const response = await api.patch(`/tasks/${data._id}`, data);
+    return {
+      error: false,
+      message: response.data?.message,
+      data: response.data,
+    };
   } catch (error) {
-    console.error("Erro ao atualizar status da tarefa", error);
-    return false;
-  }
-}
+    if (axios.isAxiosError(error)) {
+      const apiMessage = error.response?.data?.message;
+      return {
+        error: true,
+        message: apiMessage || error.message,
+      };
+    }
 
-export async function deleteTask(taskId: string): Promise<boolean> {
+    return {
+      error: true,
+      message: "Erro inesperado",
+    };
+  }
+};
+
+export const deleteTask = async (taskId: string): Promise<TaskApiResponse> => {
   try {
-    await api.delete(`/tasks/${taskId}`);
-
-    return true;
+    const response = await api.delete(`/tasks/${taskId}`);
+    return {
+      error: false,
+      message: response.data?.message,
+      data: response.data,
+    };
   } catch (error) {
-    console.error("Erro ao deletar tarefa", error);
-    return false;
+    if (axios.isAxiosError(error)) {
+      const apiMessage = error.response?.data?.message;
+      return {
+        error: true,
+        message: apiMessage || error.message,
+      };
+    }
+
+    return {
+      error: true,
+      message: "Erro inesperado",
+    };
   }
-}
+};

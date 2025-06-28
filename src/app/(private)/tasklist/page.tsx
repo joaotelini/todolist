@@ -12,14 +12,16 @@ export default async function TaskListPrivate() {
   }
 
   const cookieStore = await cookies();
-  const token = cookieStore.get("token")?.value;
 
-  if (!token) {
+  const token = cookieStore.get("token");
+
+  if (!token?.value) {
     redirect("/login");
   }
 
   try {
-    jwt.verify(token, SECRET_KEY);
+    const decoded = jwt.verify(token.value, SECRET_KEY);
+    console.log(decoded);
   } catch (error) {
     console.log(error);
     redirect("/login");

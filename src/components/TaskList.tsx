@@ -4,27 +4,27 @@ import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { BadgeCheck, Trash2 } from "lucide-react";
 import { getTasksData, setTaskCompleted, deleteTask } from "@/services/TaskApi";
-import { Task } from "@/types/TaskType";
+import { TaskType, EditStatusTaskType } from "@/types/TaskType";
 import { toast } from "sonner";
 import { TaskInput } from "./TaskInput";
 
 export const TaskList = () => {
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [tasks, setTasks] = useState<TaskType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchTasks = async () => {
     setIsLoading(true);
     const updatedTasks = await getTasksData();
-    setTasks(updatedTasks);
+    setTasks(updatedTasks.data ?? []);
     setIsLoading(false);
   };
 
-  const handleSetCompleted = async (task: Task) => {
-    await setTaskCompleted(task._id, !task.status);
+  const handleSetCompleted = async (task: EditStatusTaskType) => {
+    await setTaskCompleted(task);
     fetchTasks();
   };
 
-  const handleDeleteTask = async (task: Task) => {
+  const handleDeleteTask = async (task: TaskType) => {
     await deleteTask(task._id);
     console.log("task deletada com o id", task._id);
     fetchTasks();
@@ -73,7 +73,10 @@ export const TaskList = () => {
                   <BadgeCheck
                     onClick={async () => {
                       const newStatus = !task.status;
-                      await handleSetCompleted(task);
+                      await handleSetCompleted({
+                        _id: task._id,
+                        status: newStatus,
+                      });
 
                       const bgColor = newStatus
                         ? "bg-green-600"

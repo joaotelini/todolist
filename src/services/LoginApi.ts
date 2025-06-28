@@ -2,7 +2,7 @@ import axios from "axios";
 import { LoginType, LoginApiResponse } from "@/types/LoginType";
 
 const api = axios.create({
-  baseURL: "http://localhost:3334",
+  baseURL: "https://tasks-backend-b1yi.onrender.com",
   headers: { "Content-Type": "application/json" },
   withCredentials: true,
 });

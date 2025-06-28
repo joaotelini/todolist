@@ -9,12 +9,14 @@ import {
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+
 import { Mail, Lock } from "lucide-react";
 import { toast } from "sonner";
 import { useState } from "react";
 
 import { loginApi } from "@/services/LoginApi";
 import { LoginType } from "@/types/LoginType";
+
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -36,22 +38,16 @@ export function LoginForm() {
     try {
       const response = await loginApi(data);
 
-      if (response.error) {
-        console.log("❌ Erro encontrado na resposta:", response.error);
-        console.log("❌ Mensagem de erro:", response.message);
+      if (response?.error) {
         toast.error(response.message || "Erro ao fazer login.");
         return;
-      } else {
-        console.log("✅ Login bem-sucedido!");
-
-        console.log("🍪 Cookies atuais ANTES:", document.cookie);
-
-        toast.success("Login realizado com sucesso!");
-
-        setTimeout(() => {
-          router.push("/tasklist");
-        }, 200);
       }
+
+      toast.success("Login realizado com sucesso!");
+
+      setTimeout(() => {
+        router.push("/tasklist");
+      }, 500);
     } catch (error) {
       console.log("💥 Erro capturado no try/catch:", error);
       console.log("💥 Error type:", typeof error);

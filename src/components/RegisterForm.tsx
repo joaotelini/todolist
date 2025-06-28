@@ -10,11 +10,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+
 import { toast } from "sonner";
 import { User, Mail, Lock } from "lucide-react";
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+
 import { RegisterType } from "@/types/RegisterType";
 import { registerApi } from "@/services/RegisterApi";
 
@@ -34,20 +36,25 @@ export function RegisterForm() {
 
     const data: RegisterType = { fullname, email, password };
 
-    const result = await registerApi(data);
+    try {
+      const result = await registerApi(data);
 
-    if (result?.error) {
-      toast.error(result.message || "Erro ao criar conta.");
-      return;
+      if (result?.error) {
+        toast.error(result.message || "Erro ao criar conta.");
+        return;
+      }
+
+      toast.success("Conta criada com sucesso!");
+
+      router.push("/login");
+
+      setFullname("");
+      setEmail("");
+      setPassword("");
+    } catch (error) {
+      console.error("Erro inesperado no registro:", error);
+      toast.error("Erro inesperado. Tente novamente mais tarde.");
     }
-
-    toast.success("Conta criada com sucesso!");
-
-    router.push("/login");
-
-    setFullname("");
-    setEmail("");
-    setPassword("");
   };
 
   return (

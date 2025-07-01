@@ -1,14 +1,13 @@
 import { connectDB } from "@/lib/mongodb";
 
-type UserType = {
+type LoginType = {
   _id: string;
-  fullname: string;
   email: string;
   password: string;
 };
 
-export const loginModel = async (email: string): Promise<UserType | null> => {
+export const loginModel = async (email: string): Promise<LoginType | null> => {
   const db = await connectDB();
-  const user = await db.collection<UserType>("users").findOne({ email });
+  const user = await db.collection<LoginType>("users").findOne({ email });
   return user;
 };

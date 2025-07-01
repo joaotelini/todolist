@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import jwt from "jsonwebtoken";
 
-const SECRET_KEY = process.env.SECRET;
+const SECRET_KEY = process.env.JWT_SECRET;
 
 export default async function TaskListPrivate() {
   console.log(SECRET_KEY);

@@ -2,14 +2,14 @@ import axios from "axios";
 import { LoginType, LoginApiResponse } from "@/types/LoginType";
 
 const api = axios.create({
-  baseURL: "https://tasks-backend-b1yi.onrender.com",
+  baseURL: "http://localhost:3000",
   headers: { "Content-Type": "application/json" },
   withCredentials: true,
 });
 
 export const loginApi = async (data: LoginType): Promise<LoginApiResponse> => {
   try {
-    const response = await api.post("/auth/login", data);
+    const response = await api.post("api/auth/login", data);
 
     return {
       error: false,

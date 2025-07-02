@@ -6,7 +6,7 @@ import {
 } from "../types/TaskType";
 
 const api = axios.create({
-  baseURL: "https://tasks-backend-b1yi.onrender.com",
+  baseURL: "http://localhost:3000",
   headers: {
     "Content-Type": "application/json",
   },
@@ -15,7 +15,7 @@ const api = axios.create({
 
 export const getTasksData = async (): Promise<TaskApiResponse> => {
   try {
-    const response = await api.get("/tasks");
+    const response = await api.get("/api/tasks");
 
     return {
       error: false,
@@ -40,7 +40,7 @@ export const saveTasksData = async (
   data: NewTaskType
 ): Promise<TaskApiResponse> => {
   try {
-    const response = await api.post("/tasks", data);
+    const response = await api.post("/api/tasks", data);
 
     return {
       error: false,
@@ -67,7 +67,7 @@ export const setTaskCompleted = async (
   data: EditStatusTaskType
 ): Promise<TaskApiResponse> => {
   try {
-    const response = await api.patch(`/tasks/${data._id}`, data);
+    const response = await api.patch(`/api/tasks/${data._id}`, data);
     return {
       error: false,
       message: response.data?.message,
@@ -91,7 +91,7 @@ export const setTaskCompleted = async (
 
 export const deleteTask = async (taskId: string): Promise<TaskApiResponse> => {
   try {
-    const response = await api.delete(`/tasks/${taskId}`);
+    const response = await api.delete(`/api/tasks/${taskId}`);
     return {
       error: false,
       message: response.data?.message,

@@ -1,7 +1,17 @@
 import { MongoClient } from "mongodb";
 
 const uri = process.env.MONGODB_URI;
-const options = {};
+
+// Opções configuradas para MongoDB Atlas
+const options = {
+  maxPoolSize: 10,
+  serverSelectionTimeoutMS: 5000,
+  socketTimeoutMS: 45000,
+  connectTimeoutMS: 60000,
+  bufferMaxEntries: 0,
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+};
 
 if (!uri) {
   throw new Error("MONGODB_URI environment variable is not defined");
@@ -21,6 +31,11 @@ if (!global._mongoClientPromise) {
 const clientPromise = global._mongoClientPromise;
 
 export const connectDB = async () => {
-  const client = await clientPromise;
-  return client.db("todoList");
+  try {
+    const client = await clientPromise;
+    return client.db("todoList");
+  } catch (error) {
+    console.error("Erro ao conectar no MongoDB:", error);
+    throw error;
+  }
 };

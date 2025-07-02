@@ -10,12 +10,16 @@ export const signinController = async (request: Request) => {
     );
 
     return Response.json(response, { status: 200 });
-  } catch (error: any) {
-    console.error("Erro no controller:", error);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error("Erro no loginController:", error.message);
+    } else {
+      console.error("Erro inesperado no loginController:");
+    }
     return Response.json(
       {
         error: true,
-        message: error.message || "Erro desconhecido",
+        message: error instanceof Error ? error.message : "Erro inesperado",
       },
       { status: 500 }
     );

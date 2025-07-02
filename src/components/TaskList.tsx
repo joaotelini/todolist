@@ -21,6 +21,8 @@ export const TaskList = () => {
 
   const handleSetCompleted = async (task: EditStatusTaskType) => {
     await setTaskCompleted(task);
+    console.log("taskid:", task._id);
+    console.log("status:", task.status);
     fetchTasks();
   };
 

@@ -18,10 +18,10 @@ export const loginService = async (email: string, password: string) => {
 
   (await cookies()).set("token", token, {
     httpOnly: true,
-    secure: true,
+    secure: false,
     sameSite: "lax",
     maxAge: 60 * 60 * 24,
   });
 
-  return { message: "Usuário logado com sucesso"};
+  return { message: "Usuário logado com sucesso", token: token };
 };

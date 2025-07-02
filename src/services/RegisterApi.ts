@@ -2,7 +2,7 @@ import axios from "axios";
 import { RegisterType, RegisterApiResponse } from "@/types/RegisterType";
 
 const api = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "https://todolist-telini.vercel.app/",
   headers: {
     "Content-Type": "application/json",
   },

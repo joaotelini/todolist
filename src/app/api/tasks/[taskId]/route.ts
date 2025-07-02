@@ -1,16 +1,16 @@
 import { deleteTaskController, editTaskController } from "../controller";
-import { NextRequest } from "next/server";
+import type { NextRequest } from "next/server";
 
-export async function PATCH(
-  request: NextRequest,
-  context: { params: { taskId: string } }
-) {
+interface Params {
+  params: {
+    taskId: string;
+  };
+}
+
+export async function PATCH(request: NextRequest, context: Params) {
   return editTaskController(request, context);
 }
 
-export async function DELETE(
-  request: NextRequest,
-  context: { params: { taskId: string } }
-) {
+export async function DELETE(request: NextRequest, context: Params) {
   return deleteTaskController(request, context);
 }

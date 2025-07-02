@@ -2,6 +2,8 @@ import { getUserFromToken } from "@/app/utils/auth";
 import { TaskList } from "@/components/TaskList";
 import { redirect } from "next/navigation";
 
+export const dynamic = "force-dynamic";
+
 export default async function TaskListPrivate() {
   const userId = getUserFromToken();
 

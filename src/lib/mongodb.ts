@@ -2,22 +2,17 @@ import { MongoClient } from "mongodb";
 
 const uri = process.env.MONGODB_URI;
 
-// Opções configuradas para MongoDB Atlas
+// Opções mínimas para produção
 const options = {
   maxPoolSize: 10,
   serverSelectionTimeoutMS: 5000,
   socketTimeoutMS: 45000,
-  connectTimeoutMS: 60000,
-  bufferMaxEntries: 0,
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
 };
 
 if (!uri) {
   throw new Error("MONGODB_URI environment variable is not defined");
 }
 
-// Tipagem global
 declare global {
   var _mongoClientPromise: Promise<MongoClient> | undefined;
 }

@@ -6,7 +6,6 @@ import jwt from "jsonwebtoken";
 const SECRET_KEY = process.env.JWT_SECRET;
 
 export default async function TaskListPrivate() {
-  console.log(SECRET_KEY);
   if (!SECRET_KEY) {
     throw new Error("SECRET_KEY não está definida");
   }
@@ -21,7 +20,6 @@ export default async function TaskListPrivate() {
 
   try {
     const decoded = jwt.verify(token.value, SECRET_KEY);
-    console.log(decoded);
   } catch (error) {
     console.log(error);
     redirect("/login");

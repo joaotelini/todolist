@@ -1,31 +1,49 @@
-# 📝 ToDo List
+# 🧠 AuthTasks — Sistema de Autenticação + Gerenciador de Tarefas
 
-Uma aplicação web para gerenciamento de tarefas (ToDo), desenvolvida com **React**, **Next.js**, **Tailwind CSS** e **TypeScript**. Permite adicionar, listar, marcar como concluída e excluir tarefas, com backend integrado via **Axios**.
+Projeto fullstack desenvolvido com **Next.js 14**, **MongoDB** e **JWT**, com foco em estudo de autenticação, manipulação de cookies httpOnly e implementação de CRUD seguro com padrão **MVC**. A aplicação conta com um painel de tarefas acessível somente para usuários autenticados.
 
 ---
 
 ## 🚀 Funcionalidades
 
-- ✅ Adicionar novas tarefas
-- ✅ Listar tarefas existentes
--  Marcar tarefas como concluídas
--  Excluir tarefas
--  Separação visual entre tarefas concluídas e pendentes
+- ✅ Cadastro e login de usuários com senha criptografada
+- ✅ Autenticação com **JWT** via cookies httpOnly
+- ✅ Middleware de proteção de rotas com verificação de token expirado
+- ✅ CRUD de tarefas (criar, listar, editar status, deletar)
+- ✅ Interface intuitiva com feedback visual (toasts, skeletons, loading)
+- ✅ Organização backend em **MVC**
+- ✅ Proteção de rotas privadas no frontend
 
 ---
 
-## 🧰 Tecnologias Utilizadas
+## 🧱 Tecnologias e Ferramentas
 
-- [React](https://react.dev/)
-- [Next.js](https://nextjs.org/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Axios](https://axios-http.com/)
+### Frontend:
+- [Next.js 14 (App Router)](https://nextjs.org/)
+- React / TypeScript
+- Tailwind CSS
+- ShadCN UI
+- Toasts com [Sonner](https://sonner.emilkowal.ski/)
+
+### Backend (dentro do Next.js):
+- JWT + Cookies httpOnly
+- MongoDB + Driver oficial
+- Criptografia com bcrypt
+- Estrutura **Model → Service → Controller**
 
 ---
 
-## 🖼️ Layout
--  [ShadCN UI](https://ui.shadcn.com/)
--  [Tawilnd](http://tailwindcss.com/)
--  [Lucide](https://lucide.dev/)
+## 🧠 Autor
 
-Feito com 💻 por João Pedro Telini
+Desenvolvido por **João Pedro Telini**  
+📚 Estudante de Ciência da Computação  
+🔗 [linkedin.com/in/joaopedrotelini](https://linkedin.com/in/joaoptelini)  
+📁 [github.com/joaotelini](https://github.com/joaotelini)
+👦 [x.com/telinidev](https://x.com/telinidev)
+
+---
+
+## 📌 Observações
+
+- Projeto didático com fins de estudo e prática de autenticação segura com Next.js.
+- Aberto a melhorias, sugestões e colaborações!

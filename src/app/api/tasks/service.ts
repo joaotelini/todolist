@@ -5,15 +5,6 @@ import {
   editTaskModel,
 } from "./model";
 
-import { ObjectId } from "mongodb";
-
-// type TaskType = {
-//   _id: string;
-//   title: string;
-//   status: boolean;
-//   userId?: string;
-// };
-
 export const getTasksService = async (userId: string) => {
   return await findTasksModel(userId);
 };

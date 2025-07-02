@@ -11,13 +11,27 @@ export const getTasksController = async () => {
   try {
     const userId = await getUserFromToken();
 
+    if (!userId) {
+      return NextResponse.json(
+        { error: true, message: "Usuário não autenticado" },
+        { status: 401 }
+      );
+    }
+
     const response = await getTasksService(userId);
 
     return NextResponse.json(response.data, { status: 200 });
-  } catch (error: any) {
-    console.error("Erro em getTasksController:", error);
-    return NextResponse.json(
-      { error: true, message: error.message || "Erro ao buscar tarefas" },
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error("Erro no getTasksController:", error.message);
+    } else {
+      console.error("Erro inesperado no getTasksController:");
+    }
+    return Response.json(
+      {
+        error: true,
+        message: error instanceof Error ? error.message : "Erro inesperado",
+      },
       { status: 500 }
     );
   }
@@ -26,6 +40,12 @@ export const getTasksController = async () => {
 export const createTaskController = async (request: NextRequest) => {
   try {
     const decoded = await getUserFromToken();
+    if (!decoded) {
+      return NextResponse.json(
+        { error: true, message: "Usuário não autenticado" },
+        { status: 401 }
+      );
+    }
 
     const body = await request.json();
     const { title } = body;
@@ -39,10 +59,17 @@ export const createTaskController = async (request: NextRequest) => {
 
     const response = await createTaskService(title, decoded);
     return NextResponse.json(response, { status: 201 });
-  } catch (error: any) {
-    console.error("Erro em createTaskController:", error);
-    return NextResponse.json(
-      { error: true, message: error.message || "Erro ao criar tarefa" },
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error("Erro no createTaskController:", error.message);
+    } else {
+      console.error("Erro inesperado no createTaskController:");
+    }
+    return Response.json(
+      {
+        error: true,
+        message: error instanceof Error ? error.message : "Erro inesperado",
+      },
       { status: 500 }
     );
   }
@@ -54,6 +81,14 @@ export const editTaskController = async (
 ) => {
   try {
     const decoded = await getUserFromToken();
+
+    if (!decoded) {
+      return NextResponse.json(
+        { error: true, message: "Usuário não autenticado" },
+        { status: 401 }
+      );
+    }
+
     console.log("Token decodificado:", decoded);
 
     const taskId = params.taskId;
@@ -75,10 +110,17 @@ export const editTaskController = async (
 
     const response = await editTaskService(taskId, decoded, status);
     return NextResponse.json(response, { status: 200 });
-  } catch (error: any) {
-    console.error("Erro em editTaskController:", error);
-    return NextResponse.json(
-      { error: true, message: error.message || "Erro ao editar tarefa" },
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error("Erro no editTaskController:", error.message);
+    } else {
+      console.error("Erro inesperado no editTaskController:");
+    }
+    return Response.json(
+      {
+        error: true,
+        message: error instanceof Error ? error.message : "Erro inesperado",
+      },
       { status: 500 }
     );
   }
@@ -100,12 +142,26 @@ export const deleteTaskController = async (
 
     const decoded = await getUserFromToken();
 
+    if (!decoded) {
+      return NextResponse.json(
+        { error: true, message: "Usuário não autenticado" },
+        { status: 401 }
+      );
+    }
+
     const response = await deleteTaskService(taskId, decoded);
     return NextResponse.json(response, { status: 200 });
-  } catch (error: any) {
-    console.error("Erro em deleteTaskController:", error);
-    return NextResponse.json(
-      { error: true, message: error.message || "Erro ao excluir tarefa" },
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error("Erro no loginController:", error.message);
+    } else {
+      console.error("Erro inesperado no deleteTaskController:");
+    }
+    return Response.json(
+      {
+        error: true,
+        message: error instanceof Error ? error.message : "Erro inesperado",
+      },
       { status: 500 }
     );
   }

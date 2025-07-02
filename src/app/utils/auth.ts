@@ -1,12 +1,28 @@
 import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
 
-export const getUserFromToken = async () => {
-  const cookieStore = await cookies();
-  const token = cookieStore.get("token")?.value;
+type JwtPayloadCustom = {
+  id: string;
+};
 
-  if (!token) throw new Error("Token ausente");
+export const getUserFromToken = async (): Promise<string | null> => {
+  try {
+    const cookieStore = await cookies();
+    const token = cookieStore.get("token")?.value;
 
-  const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { id: string };
-  return decoded.id;
+    if (!token) return null;
+
+    const secret = process.env.JWT_SECRET;
+    if (!secret) {
+      console.warn("JWT_SECRET não está definido");
+      return null;
+    }
+
+    const decoded = jwt.verify(token, secret) as JwtPayloadCustom;
+
+    return decoded.id;
+  } catch (error) {
+    console.error("Erro ao verificar token:", error);
+    return null;
+  }
 };

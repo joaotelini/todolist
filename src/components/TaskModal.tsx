@@ -28,7 +28,11 @@ import { toast } from "sonner";
 import { NewTaskType } from "@/types/TaskType";
 import { saveTasksData } from "@/services/TaskApi";
 
-export const TaskModal = () => {
+type TaskModalProps = {
+  onAddTask: () => void;
+};
+
+export const TaskModal = ({ onAddTask }: TaskModalProps) => {
   const [task, setTask] = useState({
     title: "",
     description: "",
@@ -62,6 +66,7 @@ export const TaskModal = () => {
 
     try {
       await saveTasksData(newTask);
+      onAddTask();
       setTask({ title: "", description: "", category: "" });
       toast.success("Tarefa adicionada com sucesso!");
     } catch (e) {

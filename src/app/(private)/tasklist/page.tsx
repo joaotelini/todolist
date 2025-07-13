@@ -1,6 +1,5 @@
 import { getUserFromToken } from "@/app/utils/auth";
 import { TaskList } from "@/components/TaskList";
-import { TaskModal } from "@/components/TaskModal";
 import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
@@ -15,7 +14,7 @@ export default async function TaskListPrivate() {
   return (
     <div className="flex text-white min-h-screen items-center flex-col justify-center bg-gradient-to-br from-stone-800 via-zinc-700 to-slate-900">
       <h1 className="mb-10 text-5xl font-bold text-center">Lista de Tarefas</h1>
-      <TaskModal onAddTask={TaskList} />
+      <TaskList />
     </div>
   );
 }

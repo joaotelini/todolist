@@ -9,9 +9,16 @@ export const getTasksService = async (userId: string) => {
   return await findTasksModel(userId);
 };
 
-export const createTaskService = async (title: string, userId: string) => {
+export const createTaskService = async (
+  title: string,
+  description: string,
+  category: string,
+  userId: string
+) => {
   const doc = {
     title,
+    description,
+    category,
     userId,
     status: false,
   };

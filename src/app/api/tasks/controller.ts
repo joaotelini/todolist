@@ -48,7 +48,7 @@ export const createTaskController = async (request: NextRequest) => {
     }
 
     const body = await request.json();
-    const { title } = body;
+    const { title, description, category } = body;
 
     if (!title) {
       return NextResponse.json(
@@ -56,8 +56,20 @@ export const createTaskController = async (request: NextRequest) => {
         { status: 400 }
       );
     }
+    if (!description) {
+      return NextResponse.json(
+        { error: true, message: "Desc ausente" },
+        { status: 400 }
+      );
+    }
+    if (!category) {
+      return NextResponse.json(
+        { error: true, message: "Cat ausente" },
+        { status: 400 }
+      );
+    }
 
-    const response = await createTaskService(title, decoded);
+    const response = await createTaskService(title, description, category, decoded);
     return NextResponse.json(response, { status: 201 });
   } catch (error: unknown) {
     if (error instanceof Error) {

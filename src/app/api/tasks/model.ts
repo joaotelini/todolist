@@ -9,6 +9,8 @@ type EditStatusTaskType = {
 
 type CreateTaskType = {
   title: string;
+  description: string;
+  category: string;
   status: boolean;
   userId: string;
 };
@@ -33,6 +35,8 @@ export const createTaskModel = async (data: CreateTaskType) => {
   const db = await connectDB();
   const doc = {
     title: data.title,
+    description: data.description,
+    category: data.category,
     status: false,
     userId: new ObjectId(String(data.userId)),
   };

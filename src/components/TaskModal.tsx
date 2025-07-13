@@ -25,15 +25,10 @@ import {
 
 import { useState } from "react";
 import { toast } from "sonner";
-import { title } from "process";
 import { NewTaskType } from "@/types/TaskType";
 import { saveTasksData } from "@/services/TaskApi";
 
-type TaskModalProps = {
-  onAddTask: () => void;
-};
-
-export const TaskModal = ({ onAddTask }: TaskModalProps) => {
+export const TaskModal = () => {
   const [task, setTask] = useState({
     title: "",
     description: "",

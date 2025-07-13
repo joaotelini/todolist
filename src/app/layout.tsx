@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br">
-      <body className={`${rubik.variable}  antialiased`}>
+      <body className={`${rubik.variable}`}>
         {children}
         <Toaster position="bottom-right" expand={false} />
         <Analytics />
